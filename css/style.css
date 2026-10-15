@@ -305,6 +305,14 @@ fieldset {
     text-align: center;
 }
 
+.notice {
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    border-radius: 9px;
+    background: var(--turquoise);
+    color: var(--noir);
+}
+
 /* Pied de page */
 .site-footer {
     padding: 28px 24px;
@@ -315,19 +323,51 @@ fieldset {
     width: 100%;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Accueil */
+.home-hero {
+    max-width: none;
+    padding: 30px 0;
+    text-align: center;
 }
 
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-    
-    h1 {
-        font-size: 2.5rem;
-    }
+.home-hero h1 {
+    max-width: none;
+    font-size: clamp(1.6rem, 2.5vw, 2.25rem);
+    margin-bottom: 24px;
+}
+
+.home-hero p {
+    margin-bottom: 20px;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.container {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-header,
+.site-footer {
+    flex-shrink: 0;
+}
+
+.home-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.home-page .home-hero {
+    width: 100%;
+    padding: 30px 0;
 }

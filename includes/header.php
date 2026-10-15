@@ -19,10 +19,7 @@ $pageTitle = $pageTitle ?? 'Blogue coloré';
         <?= htmlspecialchars($pageTitle) ?>
     </title>
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -30,23 +27,23 @@ $pageTitle = $pageTitle ?? 'Blogue coloré';
 <header class="site-header">
     <a
         class="logo"
-        href="index.php"
+        href="/"
     >
         Blogue coloré
     </a>
 
     <nav aria-label="Navigation principale">
-        <a href="index.php">
+        <a href="/">
             Accueil
         </a>
 
-        <a href="post-index.php">
+        <a href="/articles">
             Articles
         </a>
 
         <a
             class="button small"
-            href="post-create.php"
+            href="/article/create"
         >
             Nouvel article
         </a>

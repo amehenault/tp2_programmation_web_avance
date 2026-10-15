@@ -1,32 +1,24 @@
-<?php
+{% extends 'layout.php' %}
 
-require_once __DIR__ . '/classes/crud.php';
-
-$crud = new Crud();
-
-$users = $crud->select(
-    'Users',
-    'Nom'
-);
-
-$categories = $crud->select(
-    'Categories',
-    'Nom'
-);
-
-$pageTitle = 'Ajouter un article';
-
-require_once __DIR__ . '/includes/header.php';
-
-?>
+{% block content %}
 
 <section class="form-shell">
     <h1>
         Ajouter un article
     </h1>
 
+    {% if errors is defined and errors is not empty %}
+        <div class="errors" role="alert">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     <form
-        action="post-store.php"
+        action="{{ base }}/article/store"
         method="post"
     >
         <label for="Titre">
@@ -38,6 +30,7 @@ require_once __DIR__ . '/includes/header.php';
             name="Titre"
             type="text"
             maxlength="255"
+            value="{{ titre|default('') }}"
             required
         >
 
@@ -50,7 +43,7 @@ require_once __DIR__ . '/includes/header.php';
             name="Contenu"
             rows="10"
             required
-        ></textarea>
+        >{{ contenu|default('') }}</textarea>
 
         <label for="Users_idUsers">
             Auteur
@@ -65,13 +58,14 @@ require_once __DIR__ . '/includes/header.php';
                 Choisir un auteur
             </option>
 
-            <?php foreach ($users as $user): ?>
-
-                <option value="<?= (int) $user['idUsers'] ?>">
-                    <?= htmlspecialchars($user['Nom']) ?>
+            {% for user in users %}
+                <option
+                    value="{{ user.idUsers }}"
+                    {% if user.idUsers == (idUser|default(0)) %}selected{% endif %}
+                >
+                    {{ user.Nom }}
                 </option>
-
-            <?php endforeach; ?>
+            {% endfor %}
         </select>
 
         <fieldset>
@@ -80,21 +74,18 @@ require_once __DIR__ . '/includes/header.php';
             </legend>
 
             <div class="checkboxes">
-
-                <?php foreach ($categories as $categorie): ?>
-
+                {% for categorie in categories %}
                     <label class="checkbox">
                         <input
                             type="checkbox"
                             name="categories[]"
-                            value="<?= (int) $categorie['idCategories'] ?>"
+                            value="{{ categorie.idCategories }}"
+                            {% if categorie.idCategories in (categoryIds|default([])) %}checked{% endif %}
                         >
 
-                        <?= htmlspecialchars($categorie['Nom']) ?>
+                        {{ categorie.Nom }}
                     </label>
-
-                <?php endforeach; ?>
-
+                {% endfor %}
             </div>
         </fieldset>
 
@@ -104,11 +95,11 @@ require_once __DIR__ . '/includes/header.php';
         >
             Publier l’article
         </button>
+
+        <a href="{{ base }}/articles">
+            Annuler et revenir aux articles
+        </a>
     </form>
 </section>
 
-<?php
-
-require_once __DIR__ . '/includes/footer.php';
-
-?>
+{% endblock %}
